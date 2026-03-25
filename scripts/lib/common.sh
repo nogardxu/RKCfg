@@ -72,12 +72,19 @@ link_dotfile() {
 clone_or_update_repo() {
     local repo_url="$1"
     local target="$2"
+    local ref="${3:-}"
 
     mkdir -p "$(dirname "$target")"
 
     if [[ -d "$target/.git" ]]; then
         log "Updating $target"
-        git -C "$target" pull --ff-only
+        git -C "$target" fetch --tags --force origin
+
+        if [[ -n "$ref" ]]; then
+            git -C "$target" checkout --force "$ref"
+        else
+            git -C "$target" pull --ff-only
+        fi
         return
     fi
 
@@ -86,5 +93,9 @@ clone_or_update_repo() {
     fi
 
     log "Cloning $repo_url -> $target"
-    git clone --depth 1 "$repo_url" "$target"
+    if [[ -n "$ref" ]]; then
+        git clone --branch "$ref" --depth 1 "$repo_url" "$target"
+    else
+        git clone --depth 1 "$repo_url" "$target"
+    fi
 }

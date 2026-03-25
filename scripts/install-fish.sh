@@ -4,7 +4,8 @@ set -euo pipefail
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$script_dir/lib/common.sh"
 
-config_home="${XDG_CONFIG_HOME:-$HOME/.config}"
+config_home="$HOME/.config"
+mkdir -p "$config_home" "$config_home/fish/conf.d"
 
 link_dotfile "$dotfiles_dir/.config/fish/config.fish" "$config_home/fish/config.fish"
 link_dotfile "$dotfiles_dir/.config/fish/fish_plugins" "$config_home/fish/fish_plugins"
@@ -32,4 +33,3 @@ fish -c '
         fisher update
     end
 '
-

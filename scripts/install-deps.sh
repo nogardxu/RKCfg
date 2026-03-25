@@ -12,6 +12,19 @@ load_homebrew_env() {
     fi
 }
 
+install_starship() {
+    mkdir -p "$HOME/.local/bin"
+    export PATH="$HOME/.local/bin:$PATH"
+
+    if [[ -x "$HOME/.local/bin/starship" ]] || command_exists starship; then
+        log "Installing or updating starship via the official install script"
+    else
+        log "Installing starship via the official install script"
+    fi
+
+    curl -sS https://starship.rs/install.sh | sh -s -- -y -b "$HOME/.local/bin"
+}
+
 install_homebrew() {
     if command_exists brew; then
         return
@@ -31,7 +44,8 @@ install_macos_deps() {
     install_homebrew
 
     log "Installing packages with Homebrew"
-    brew install fish tmux starship git curl
+    brew install fish tmux git curl
+    install_starship
 }
 
 install_linux_deps() {
@@ -42,11 +56,7 @@ install_linux_deps() {
     log "Installing packages with apt-get"
     sudo apt-get update
     sudo apt-get install -y fish tmux git curl
-
-    if ! command_exists starship; then
-        log "Installing starship"
-        curl -fsSL https://starship.rs/install.sh | sh -s -- -y
-    fi
+    install_starship
 }
 
 main() {
@@ -64,4 +74,3 @@ main() {
 }
 
 main "$@"
-
