@@ -8,3 +8,6 @@ sudo bash "$script_dir/install-deps.sh"
 sudo bash "$script_dir/install-fish.sh"
 sudo bash "$script_dir/install-tmux.sh"
 
+curl -sS https://starship.rs/install.sh | sh
+starship init fish | source
+
