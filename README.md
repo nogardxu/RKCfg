@@ -29,7 +29,7 @@
 
 ## 脚本会做什么
 
-- 自动安装基础依赖：`fish`、`tmux`、`git`、`curl`
+- 自动安装基础依赖：`fish`、`tmux`、`git`、`curl`，以及 Linux 剪贴板工具 `wl-clipboard`、`xclip`、`xsel`
 - 按 Starship 官方安装脚本安装 `starship`
 - 把仓库内配置软链到官方默认目录 `~/.config` 和 `~/.tmux`
 - 备份已有同名文件到 `~/.rkcfg-backups/<timestamp>/`
@@ -43,3 +43,4 @@
 - `fish_variables`、插件生成的 `functions/`、`completions/` 没有纳入版本库。
 - tmux 配置会同时链接到 `~/.config/tmux/tmux.conf` 和 `~/.tmux.conf`，兼容官方默认路径和传统路径。
 - `starship` 和 `tmux` 状态栏里用了 Nerd Font 图标；如果终端里图标显示异常，换用 Nerd Font 即可。
+- tmux 复制会按环境自动使用 `clip.exe`（WSL）、`wl-copy`（Wayland）、`xclip` / `xsel`（X11）或 `pbcopy`（macOS）。

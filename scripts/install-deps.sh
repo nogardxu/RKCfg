@@ -65,7 +65,7 @@ install_macos_deps() {
 install_linux_deps() {
     local missing_packages=()
 
-    for package in fish tmux git curl; do
+    for package in fish tmux git curl wl-clipboard xclip xsel; do
         if ! command_exists "$package"; then
             missing_packages+=("$package")
         fi
@@ -73,7 +73,7 @@ install_linux_deps() {
 
     if ((${#missing_packages[@]} > 0)); then
         if ! command_exists apt-get; then
-            die "Unsupported Linux distribution. Please install fish, tmux, starship, git, and curl manually."
+            die "Unsupported Linux distribution. Please install fish, tmux, starship, git, curl, and a clipboard tool manually."
         fi
 
         log "Installing packages with apt-get: ${missing_packages[*]}"
