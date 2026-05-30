@@ -43,19 +43,46 @@ install_macos_deps() {
     load_homebrew_env
     install_homebrew
 
-    log "Installing packages with Homebrew"
-    brew install fish tmux git curl
+    local packages=(fish tmux git curl)
+    local missing_packages=()
+
+    for package in "${packages[@]}"; do
+        if ! brew list --formula "$package" >/dev/null 2>&1; then
+            missing_packages+=("$package")
+        fi
+    done
+
+    if ((${#missing_packages[@]} > 0)); then
+        log "Installing packages with Homebrew: ${missing_packages[*]}"
+        brew install "${missing_packages[@]}"
+    else
+        log "Homebrew packages already installed"
+    fi
+
     install_starship
 }
 
 install_linux_deps() {
-    if ! command_exists apt-get; then
-        die "Unsupported Linux distribution. Please install fish, tmux, starship, git, and curl manually."
+    local missing_packages=()
+
+    for package in fish tmux git curl; do
+        if ! command_exists "$package"; then
+            missing_packages+=("$package")
+        fi
+    done
+
+    if ((${#missing_packages[@]} > 0)); then
+        if ! command_exists apt-get; then
+            die "Unsupported Linux distribution. Please install fish, tmux, starship, git, and curl manually."
+        fi
+
+        log "Installing packages with apt-get: ${missing_packages[*]}"
+        sudo apt-get update
+        sudo apt-get install -y "${missing_packages[@]}"
+    else
+        log "System packages already installed"
     fi
 
-    log "Installing packages with apt-get"
-    sudo apt-get update
-    sudo apt-get install -y fish tmux git curl
     install_starship
 }
 

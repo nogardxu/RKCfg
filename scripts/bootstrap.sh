@@ -4,10 +4,12 @@ set -euo pipefail
 script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 export RKCFG_BACKUP_DIR="${RKCFG_BACKUP_DIR:-$HOME/.rkcfg-backups/$(date +%Y%m%d%H%M%S)}"
 
-sudo bash "$script_dir/install-deps.sh"
-sudo bash "$script_dir/install-fish.sh"
-sudo bash "$script_dir/install-tmux.sh"
+if [[ "${EUID:-$(id -u)}" -eq 0 && -n "${SUDO_USER:-}" ]]; then
+    printf '[rkcfg] ERROR: Run bootstrap without sudo. Only package-manager commands should elevate privileges.\n' >&2
+    exit 1
+fi
 
-curl -sS https://starship.rs/install.sh | sh
-starship init fish | source
+bash "$script_dir/install-deps.sh"
+bash "$script_dir/install-fish.sh"
+bash "$script_dir/install-tmux.sh"
 

@@ -6,7 +6,7 @@ source "$script_dir/lib/common.sh"
 
 config_home="$HOME/.config"
 tmux_config_dir="$config_home/tmux"
-tmux_plugins_dir="${TMUX_PLUGIN_MANAGER_PATH:-$HOME/.tmux/plugins}"
+tmux_plugins_dir="$HOME/.tmux/plugins"
 tpm_dir="$tmux_plugins_dir/tpm"
 catppuccin_dir="$tmux_config_dir/plugins/catppuccin/tmux"
 
@@ -19,7 +19,7 @@ clone_or_update_repo "https://github.com/tmux-plugins/tpm" "$tpm_dir"
 clone_or_update_repo "https://github.com/catppuccin/tmux" "$catppuccin_dir" "v2.1.3"
 
 if command_exists tmux; then
-    "$tpm_dir/bin/install_plugins"
+    tmux start-server \; source-file "$HOME/.tmux.conf" \; run-shell "$tpm_dir/bin/install_plugins"
 fi
 
 if command_exists tmux && tmux ls >/dev/null 2>&1; then

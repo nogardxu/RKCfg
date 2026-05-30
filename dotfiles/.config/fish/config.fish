@@ -4,7 +4,7 @@ if status is-interactive
     end
 end
 
-set fish_greeting "Welcome, $(whoami)!"
+set fish_greeting "Welcome, "(whoami)"!"
 
 set -gx NVM_DIR "$HOME/.nvm"
 if test -s "$NVM_DIR/nvm.sh"

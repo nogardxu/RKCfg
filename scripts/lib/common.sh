@@ -5,6 +5,10 @@ repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 dotfiles_dir="$repo_root/dotfiles"
 backup_root="${RKCFG_BACKUP_DIR:-$HOME/.rkcfg-backups/$(date +%Y%m%d%H%M%S)}"
 
+if [[ "${EUID:-$(id -u)}" -eq 0 && -n "${SUDO_USER:-}" ]]; then
+    die "Run user configuration scripts without sudo. Only package-manager commands should elevate privileges."
+fi
+
 log() {
     printf '[rkcfg] %s\n' "$*"
 }
