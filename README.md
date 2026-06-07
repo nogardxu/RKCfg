@@ -33,13 +33,13 @@
 ## 脚本会做什么
 
 - 自动安装基础依赖：`fish`、`tmux`、`git`、`curl`，以及 Linux 剪贴板工具 `wl-clipboard`、`xclip`、`xsel`
-- 按 Starship 官方安装脚本安装 `starship`
+- 按 Starship 官方安装脚本把 `starship` 安装到 `~/.local/bin`
 - 把仓库内配置软链到官方默认目录 `~/.config` 和 `~/.tmux`
 - 备份已有同名文件到 `~/.rkcfg-backups/<timestamp>/`
 - 按 Fisher 官方安装方式安装 `fisher`
 - 按 TPM 官方安装方式安装 `tpm`，并自动执行命令行插件安装
 - 按 Catppuccin 官方推荐方式把 tmux 主题安装到 `~/.config/tmux/plugins/catppuccin`
-- 按 Herdr 官方安装脚本安装 `herdr`
+- 按 Herdr 官方安装脚本把 `herdr` 安装到 `~/.local/bin`
 - 为 Herdr 安装 `omp`、`codex`、`opencode` integrations，并链接仓库内的 Herdr 配置
 
 ## 说明
@@ -50,3 +50,4 @@
 - `starship` 和 `tmux` 状态栏里用了 Nerd Font 图标；如果终端里图标显示异常，换用 Nerd Font 即可。
 - tmux 复制会按环境自动使用 `clip.exe`（WSL）、`wl-copy`（Wayland）、`xclip` / `xsel`（X11）或 `pbcopy`（macOS）。
 - Herdr 安装脚本会在检测到运行中的 Herdr server 时自动执行 `herdr server reload-config`。
+- 所有用户态工具、配置、插件都写入当前用户的 home 目录；脚本会拒绝以 root 身份运行，避免内容落到 `/root`。

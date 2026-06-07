@@ -13,16 +13,15 @@ load_homebrew_env() {
 }
 
 install_starship() {
-    mkdir -p "$HOME/.local/bin"
-    export PATH="$HOME/.local/bin:$PATH"
+    ensure_user_bin_dir
 
-    if [[ -x "$HOME/.local/bin/starship" ]] || command_exists starship; then
+    if [[ -x "$user_bin_dir/starship" ]] || command_exists starship; then
         log "Installing or updating starship via the official install script"
     else
         log "Installing starship via the official install script"
     fi
 
-    curl -sS https://starship.rs/install.sh | sh -s -- -y -b "$HOME/.local/bin"
+    curl -sS https://starship.rs/install.sh | sh -s -- -y -b "$user_bin_dir"
 }
 
 install_homebrew() {

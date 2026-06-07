@@ -6,8 +6,8 @@ source "$script_dir/lib/common.sh"
 
 export RKCFG_BACKUP_DIR="${RKCFG_BACKUP_DIR:-$HOME/.rkcfg-backups/$(date +%Y%m%d%H%M%S)}"
 
-if [[ "${EUID:-$(id -u)}" -eq 0 && -n "${SUDO_USER:-}" ]]; then
-    die "Run bootstrap without sudo. Only package-manager commands should elevate privileges."
+if [[ "${EUID:-$(id -u)}" -eq 0 ]]; then
+    die "Run bootstrap as a regular user. Only package-manager commands should elevate privileges."
 fi
 
 declare -A component_scripts=(

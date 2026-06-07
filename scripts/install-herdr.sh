@@ -8,6 +8,7 @@ config_home="$HOME/.config"
 herdr_config_dir="$config_home/herdr"
 herdr_config="$herdr_config_dir/config.toml"
 
+ensure_user_bin_dir
 mkdir -p "$config_home" "$herdr_config_dir"
 
 install_herdr() {
@@ -17,11 +18,7 @@ install_herdr() {
     fi
 
     log "Installing Herdr"
-    curl -fsSL https://herdr.dev/install.sh | sh
-
-    if ! command_exists herdr; then
-        export PATH="$HOME/.local/bin:$PATH"
-    fi
+    HERDR_INSTALL_DIR="$user_bin_dir" curl -fsSL https://herdr.dev/install.sh | sh
 
     command_exists herdr || die "Herdr installation completed but herdr is not available in PATH."
 }

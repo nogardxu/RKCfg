@@ -4,10 +4,8 @@ set -euo pipefail
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 dotfiles_dir="$repo_root/dotfiles"
 backup_root="${RKCFG_BACKUP_DIR:-$HOME/.rkcfg-backups/$(date +%Y%m%d%H%M%S)}"
+user_bin_dir="$HOME/.local/bin"
 
-if [[ "${EUID:-$(id -u)}" -eq 0 && -n "${SUDO_USER:-}" ]]; then
-    die "Run user configuration scripts without sudo. Only package-manager commands should elevate privileges."
-fi
 
 log() {
     printf '[rkcfg] %s\n' "$*"
@@ -21,9 +19,16 @@ die() {
     printf '[rkcfg] ERROR: %s\n' "$*" >&2
     exit 1
 }
+if [[ "${EUID:-$(id -u)}" -eq 0 ]]; then
+    die "Run user configuration scripts as a regular user. Only package-manager commands should elevate privileges."
+fi
 
 command_exists() {
     command -v "$1" >/dev/null 2>&1
+}
+ensure_user_bin_dir() {
+    mkdir -p "$user_bin_dir"
+    export PATH="$user_bin_dir:$PATH"
 }
 
 ensure_backup_dir() {
