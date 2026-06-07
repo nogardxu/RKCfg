@@ -1,0 +1,58 @@
+onboarding = false
+
+[theme]
+name = "catppuccin"
+
+[theme.custom]
+panel_bg = "reset"
+accent = "#fab387"
+surface0 = "#313446"
+overlay0 = "#cdd6f4"
+overlay1 = "#eef1ff"
+
+[terminal]
+new_cwd = "follow"
+
+[keys]
+prefix = "backtick"
+reload_config = "prefix+r"
+workspace_picker = "prefix+w"
+goto = "prefix+g"
+new_workspace = "prefix+shift+n"
+rename_workspace = "prefix+shift+w"
+close_workspace = "prefix+shift+d"
+new_tab = "prefix+c"
+rename_tab = "prefix+comma"
+previous_tab = "ctrl+h"
+next_tab = "ctrl+l"
+switch_tab = "prefix+1..9"
+close_tab = "prefix+shift+x"
+rename_pane = "prefix+shift+p"
+edit_scrollback = "prefix+e"
+focus_pane_left = "prefix+h"
+focus_pane_down = "prefix+j"
+focus_pane_up = "prefix+k"
+focus_pane_right = "prefix+l"
+cycle_pane_next = "prefix+tab"
+cycle_pane_previous = "prefix+shift+tab"
+split_vertical = "prefix+backslash"
+split_horizontal = "prefix+minus"
+close_pane = "prefix+x"
+zoom = "prefix+z"
+resize_mode = "prefix+shift+r"
+toggle_sidebar = "prefix+b"
+focus_agent = "prefix+alt+1..9"
+switch_workspace = "prefix+shift+1..9"
+
+[ui.toast]
+delivery = "system"
+
+[ui]
+show_agent_labels_on_pane_borders = false
+agent_panel_scope = "current"
+
+[experimental]
+pane_history = false
+
+[ui.sound]
+enabled = false

@@ -77,6 +77,9 @@ install_linux_deps() {
         fi
 
         log "Installing packages with apt-get: ${missing_packages[*]}"
+        if ! sudo -n true >/dev/null 2>&1; then
+            warn "sudo will prompt for your password to install missing packages."
+        fi
         sudo apt-get update
         sudo apt-get install -y "${missing_packages[@]}"
     else
