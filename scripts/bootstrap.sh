@@ -10,12 +10,6 @@ if [[ "${EUID:-$(id -u)}" -eq 0 ]]; then
     die "Run bootstrap as a regular user. Only package-manager commands should elevate privileges."
 fi
 
-declare -A component_scripts=(
-    [fish]="$script_dir/install-fish.sh"
-    [tmux]="$script_dir/install-tmux.sh"
-    [herdr]="$script_dir/install-herdr.sh"
-)
-
 declare -a selected_components=()
 
 usage() {
@@ -167,7 +161,19 @@ resolve_components() {
 
 run_component() {
     local component="$1"
-    local script="${component_scripts[$component]:-}"
+    local script=""
+
+    case "$component" in
+        fish)
+            script="$script_dir/install-fish.sh"
+            ;;
+        tmux)
+            script="$script_dir/install-tmux.sh"
+            ;;
+        herdr)
+            script="$script_dir/install-herdr.sh"
+            ;;
+    esac
 
     [[ -n "$script" ]] || die "No installer registered for component: $component"
     log "Applying component: $component"

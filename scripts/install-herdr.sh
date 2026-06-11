@@ -45,6 +45,6 @@ link_dotfile "$dotfiles_dir/.config/herdr/config.toml" "$herdr_config"
 ensure_integration_dirs
 install_integrations
 
-if herdr status >/dev/null 2>&1; then
+if herdr status server --json 2>/dev/null | grep -q '"running":true'; then
     herdr server reload-config >/dev/null
 fi
